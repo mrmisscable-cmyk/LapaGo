@@ -1,2 +1,2 @@
 # LapaGo
-Aplikasi Mobile
+Aplikasi Sewa Lapangan Olahraga
