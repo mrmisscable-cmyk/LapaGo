@@ -86,10 +86,10 @@ Import file lapago_db.sql (atau file SQL dump dari repositori ini) ke dalam data
 
 Sesuaikan kredensial koneksi database pada file konfigurasi aplikasi Anda (misal .env atau config/database.php):
 
-DB_HOST=127.0.0.1
-DB_USER=root
+DB_HOST=
+DB_USER=
 DB_PASS=
-DB_NAME=lapago_db
+DB_NAME=
 
 
 🔒 Hak Akses & Peran Pengguna (Roles)
