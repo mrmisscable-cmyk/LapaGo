@@ -16,11 +16,13 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isRegistering = mode === 'register';
 
   const submit = async () => {
     setError('');
+    setSuccess('');
     if (!email.trim() || !password || (isRegistering && (!name.trim() || !phone.trim()))) {
       setError('Lengkapi semua data yang diperlukan.');
       return;
@@ -36,6 +38,13 @@ export default function Login() {
           password,
         }),
       });
+      if (isRegistering) {
+        setMode('login');
+        setPassword('');
+        setSuccess('Akun berhasil dibuat. Silakan masuk dengan akun baru Anda.');
+        return;
+      }
+
       await signIn(result.token, result.profile);
       router.replace('/(tabs)');
     } catch (submitError) {
@@ -74,6 +83,7 @@ export default function Login() {
           autoCapitalize="none"
         />
         {error ? <Text style={styles.error}>{error}</Text> : null}
+        {success ? <Text style={styles.success}>{success}</Text> : null}
         <ActionButton
           label={isSubmitting ? 'Memproses...' : isRegistering ? 'Buat Akun' : 'Masuk'}
           icon={isRegistering ? 'person-add-outline' : 'log-in-outline'}
@@ -90,6 +100,7 @@ export default function Login() {
           onPress={() => {
             setMode(isRegistering ? 'login' : 'register');
             setError('');
+            setSuccess('');
           }}
         >
           <Text style={styles.switchAction}>{isRegistering ? 'Masuk' : 'Buat akun'}</Text>
@@ -123,6 +134,7 @@ const styles = StyleSheet.create({
   fieldLabel: { color: colors.muted, fontSize: 10, fontWeight: '800', letterSpacing: 0.6 },
   input: { minHeight: 46, borderRadius: 11, borderWidth: 1, borderColor: colors.border, paddingHorizontal: 13, backgroundColor: colors.surface, color: colors.text, fontSize: 13 },
   error: { color: colors.danger, fontSize: 12, lineHeight: 18 },
+  success: { color: colors.primary, fontSize: 12, lineHeight: 18 },
   switchRow: { flexDirection: 'row', justifyContent: 'center', gap: 5 },
   switchText: { color: colors.muted, fontSize: 12 },
   switchAction: { color: colors.primary, fontSize: 12, fontWeight: '800' },
